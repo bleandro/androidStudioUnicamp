@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
 
         opr1 = (EditText) findViewById(R.id.opr1XML);
         opr2 = (EditText) findViewById(R.id.opr2XML);
+
+        opr1.setGravity(Gravity.RIGHT);
+        opr2.setGravity(Gravity.RIGHT);
 
         soma = (Button) findViewById(R.id.somaXML);
         sub = (Button) findViewById(R.id.subXML);
