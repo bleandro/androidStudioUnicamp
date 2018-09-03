@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         result = (TextView) findViewById(R.id.resultXML);
 
-        View.OnClickListener hand = new View.OnClickListener() {
+        /*View.OnClickListener hand = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 double result_in = 0;
@@ -81,7 +81,42 @@ public class MainActivity extends AppCompatActivity {
         soma.setOnClickListener(hand);
         sub.setOnClickListener(hand);
         mult.setOnClickListener(hand);
-        div.setOnClickListener(hand);
+        div.setOnClickListener(hand);*/
+    }
+
+    public void disparo(View v) {
+        double result_in = 0;
+
+        String lstErro = validaCampos();
+        if (lstErro.equals("")) {
+            double opr1_in = Double.parseDouble(opr1.getText().toString());
+            double opr2_in = Double.parseDouble(opr2.getText().toString());
+
+            switch (v.getId()) {
+                case R.id.somaXML:
+                    result_in = opr1_in + opr2_in;
+                    break;
+
+                case R.id.subXML:
+                    result_in = opr1_in - opr2_in;
+                    break;
+
+                case R.id.multXML:
+                    result_in = opr1_in * opr2_in;
+                    break;
+
+                case R.id.divXML:
+                    result_in = opr1_in / opr2_in;
+                    break;
+            }
+
+            result.setText(Double.toString(result_in));
+
+            //Close keyboard
+            InputMethodManager imm = (InputMethodManager) MainActivity.this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(MainActivity.this.getCurrentFocus().getWindowToken(), 0);
+        } else
+            Toast.makeText(MainActivity.this, lstErro, Toast.LENGTH_LONG).show();
     }
 
     public String validaCampos(){
