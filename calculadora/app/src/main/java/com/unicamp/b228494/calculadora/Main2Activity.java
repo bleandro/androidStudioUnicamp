@@ -20,6 +20,7 @@ public class Main2Activity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Intent myIntent = new Intent(Main2Activity.this, MainActivity.class);
                 Intent myIntent = new Intent("calculadora");
                 startActivity(myIntent);
             }
