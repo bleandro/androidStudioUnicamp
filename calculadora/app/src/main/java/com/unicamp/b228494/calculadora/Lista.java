@@ -28,6 +28,7 @@ public class Lista extends AppCompatActivity implements AdapterView.OnItemClickL
     private Button btAdc;
     private ArrayList<String> lista = new ArrayList<>();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,8 +40,11 @@ public class Lista extends AppCompatActivity implements AdapterView.OnItemClickL
         this.edInput = (EditText) findViewById(R.id.editXML);
         this.btAdc = (Button) findViewById(R.id.adcXML);
 
-        ArrayAdapter<String> itemAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, lista);
-        lvLista.setAdapter(itemAdapter);
+//        ArrayAdapter<String> itemAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, lista);
+//        lvLista.setAdapter(itemAdapter);
+
+        MyAdapter adapter = new MyAdapter(this, lista);
+        lvLista.setAdapter(adapter);
 
         this.btAdc.setOnClickListener(new View.OnClickListener() {
             @Override
