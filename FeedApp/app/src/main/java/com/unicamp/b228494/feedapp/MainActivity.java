@@ -7,6 +7,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -15,9 +19,14 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class MainActivity extends AppCompatActivity {
+import java.net.HttpURLConnection;
+import java.net.URL;
 
-    private TextView xmlTextView;
+public class MainActivity extends AppCompatActivity {
+    //private TextView xmlTextView;
+    private String mFileContents;
+    private Button feedButton;
+    private ListView myList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,14 +35,26 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        xmlTextView = (TextView) findViewById(R.id.textXML);
+        //xmlTextView = (TextView) findViewById(R.id.textXML);
+        feedButton = (Button) findViewById(R.id.btXML);
+        myList = (ListView) findViewById(R.id.lvXML);
 
         DownloadData downloadData = new DownloadData();
         downloadData.execute("http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topfreeapplications/limit=10/xml");
+
+        feedButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParseApplication parseApplication = new ParseApplication(mFileContents);
+                parseApplication.process();
+
+                ArrayAdapter<Application1> arrayAdapter = new ArrayAdapter<Application1>(MainActivity.this, android.R.layout.simple_list_item_1, parseApplication.getApplications());
+                myList.setAdapter(arrayAdapter);
+            }
+        });
     }
 
     private class DownloadData extends AsyncTask<String, Void, String> {
-        private String mFileContents;
 
         @Override
         protected String doInBackground(String... strings) {
@@ -79,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s) {
-            xmlTextView.setText(mFileContents);
+            //xmlTextView.setText(mFileContents);
 
             super.onPostExecute(s);
         }
