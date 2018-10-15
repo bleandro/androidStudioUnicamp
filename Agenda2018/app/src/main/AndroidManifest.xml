@@ -19,6 +19,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Cadastrar"
+            android:label="@string/title_activity_cadastrar"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Apagar"
+            android:label="@string/title_activity_apagar"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Atualizar"
+            android:label="@string/title_activity_atualizar"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

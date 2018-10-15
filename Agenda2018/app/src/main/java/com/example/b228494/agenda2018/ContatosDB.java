@@ -40,7 +40,7 @@ public class ContatosDB extends SQLiteOpenHelper {
 
     }
 
-    public void salvaContato(Contato contato) {
+    public long salvaContato(Contato contato) {
         long id = contato.get_id();
 
         SQLiteDatabase db = getWritableDatabase();
@@ -52,10 +52,13 @@ public class ContatosDB extends SQLiteOpenHelper {
 
             if (id != 0) {
                 String _id = String.valueOf(id);
-                int count = db.update(TABLE_NAME, valores, "id=?", new String[] {_id});
+                return db.update(TABLE_NAME, valores, "id=?", new String[] {_id});
             } else {
-                db.insert(TABLE_NAME, null, valores);
+                return db.insert(TABLE_NAME, null, valores);
             }
+        }
+        catch (Exception e){
+            return -1;
         }
         finally {
             db.close();
@@ -101,5 +104,27 @@ public class ContatosDB extends SQLiteOpenHelper {
         }
 
         return lista;
+    }
+
+    public Contato pesquisaContato(String nomeContato) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        try {
+            Cursor cursor = db.query(TABLE_NAME, null, "nome=?", new String[] {nomeContato}, null, null, null);
+
+            if (cursor.moveToFirst()) {
+                    long id = cursor.getLong(cursor.getColumnIndex("_id"));
+                    String nome = cursor.getString(cursor.getColumnIndex("nome"));
+                    String email = cursor.getString(cursor.getColumnIndex("email"));
+                    int telefone = cursor.getInt(cursor.getColumnIndex("telefone"));
+
+                    return new Contato(id, nome, telefone, email);
+            }
+        }
+        finally {
+            db.close();
+        }
+
+        return null;
     }
 }
