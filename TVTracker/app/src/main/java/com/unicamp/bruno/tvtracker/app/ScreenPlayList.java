@@ -21,7 +21,7 @@ import java.util.Map;
 public class ScreenPlayList {
 
     @JsonProperty("Search")
-    private List<Search> search = null;
+    private List<ScreenPlay> screenPlays = null;
     @JsonProperty("totalResults")
     private String totalResults;
     @JsonProperty("Response")
@@ -30,13 +30,13 @@ public class ScreenPlayList {
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     @JsonProperty("Search")
-    public List<Search> getSearch() {
-        return search;
+    public List<ScreenPlay> getSearch() {
+        return screenPlays;
     }
 
     @JsonProperty("Search")
-    public void setSearch(List<Search> search) {
-        this.search = search;
+    public void setScreenPlays(List<ScreenPlay> screenPlays) {
+        this.screenPlays = screenPlays;
     }
 
     @JsonProperty("totalResults")

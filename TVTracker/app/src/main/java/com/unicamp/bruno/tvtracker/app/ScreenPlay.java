@@ -19,7 +19,7 @@ import java.util.Map;
         "Poster"
 })
 
-public class Search {
+public class ScreenPlay {
 
     @JsonProperty("Title")
     private String title;

@@ -3,8 +3,10 @@ package com.unicamp.bruno.tvtracker;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -13,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -24,12 +27,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.unicamp.bruno.tvtracker.app.RequestController;
+import com.unicamp.bruno.tvtracker.app.ScreenPlay;
 import com.unicamp.bruno.tvtracker.app.ScreenPlayList;
-import com.unicamp.bruno.tvtracker.app.Search;
 
 import java.io.IOException;
 
-public class ToolbarSearchActivity extends AppCompatActivity  implements SearchView.OnQueryTextListener{
+public class ToolbarSearchActivity extends AppCompatActivity  implements SearchView.OnQueryTextListener, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
     private String TAG = ToolbarSearchActivity.class.getSimpleName();
     private RequestController requestController;
@@ -51,8 +54,10 @@ public class ToolbarSearchActivity extends AppCompatActivity  implements SearchV
         progressBar.setVisibility(View.GONE);
 
         requestController = RequestController.getInstance();
-    }
 
+        lvScreenplays.setOnItemClickListener(this);
+        lvScreenplays.setOnItemLongClickListener(this);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -61,7 +66,7 @@ public class ToolbarSearchActivity extends AppCompatActivity  implements SearchV
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         MenuItem mSearchmenuItem = menu.findItem(R.id.menu_toolbarsearch);
         SearchView searchView = (SearchView) mSearchmenuItem.getActionView();
-        searchView.setQueryHint("Title to Search");
+        searchView.setQueryHint("Title to ScreenPlay");
         searchView.setOnQueryTextListener(this);
 
         return true;
@@ -88,7 +93,7 @@ public class ToolbarSearchActivity extends AppCompatActivity  implements SearchV
                         try {
                             screenPlayList = new ObjectMapper().readValue(response, ScreenPlayList.class);
 
-                            ArrayAdapter<Search> arrayAdapter = new ArrayAdapter<Search>(ToolbarSearchActivity.this, android.R.layout.simple_list_item_1, screenPlayList.getSearch());
+                            ArrayAdapter<ScreenPlay> arrayAdapter = new ArrayAdapter<ScreenPlay>(ToolbarSearchActivity.this, android.R.layout.simple_list_item_1, screenPlayList.getSearch());
                             lvScreenplays.setAdapter(arrayAdapter);
 
                             progressBar.setVisibility(View.GONE);
@@ -114,6 +119,35 @@ public class ToolbarSearchActivity extends AppCompatActivity  implements SearchV
     @Override
     public boolean onQueryTextChange(String newText) {
         //NOTHING TO DO
+
+        return true;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        ScreenPlay screenPlay = (ScreenPlay) parent.getAdapter().getItem(position);
+
+        Toast.makeText(ToolbarSearchActivity.this, screenPlay.getTitle(), Toast.LENGTH_LONG * 5).show();
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        final ScreenPlay screenPlay = (ScreenPlay) parent.getAdapter().getItem(position);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Add \"" + screenPlay.getTitle() + "\" as a favorite?")
+                .setTitle("Alerta")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Add item as a favorite
+
+
+                        Toast.makeText(ToolbarSearchActivity.this, "\"" + screenPlay.getTitle() + "\" was added as a favorite", Toast.LENGTH_LONG * 2).show();
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
 
         return true;
     }
