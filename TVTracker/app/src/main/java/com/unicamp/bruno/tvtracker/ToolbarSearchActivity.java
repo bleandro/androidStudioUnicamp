@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -89,12 +90,18 @@ public class ToolbarSearchActivity extends AppCompatActivity  implements SearchV
                     public void onResponse(String response) {
 
                         //JSON from String to Object
-                        ScreenPlayList screenPlayList = null;
+                         ScreenPlayList screenPlayList = null;
                         try {
                             screenPlayList = new ObjectMapper().readValue(response, ScreenPlayList.class);
 
-                            ArrayAdapter<ScreenPlay> arrayAdapter = new ArrayAdapter<ScreenPlay>(ToolbarSearchActivity.this, android.R.layout.simple_list_item_1, screenPlayList.getSearch());
-                            lvScreenplays.setAdapter(arrayAdapter);
+                            if (screenPlayList.getResponse().equals("True")) {
+                                ArrayAdapter<ScreenPlay> arrayAdapter = new ArrayAdapter<ScreenPlay>(ToolbarSearchActivity.this, android.R.layout.simple_list_item_1, screenPlayList.getSearch());
+                                lvScreenplays.setAdapter(arrayAdapter);
+                            }
+                            else {
+                                String error = screenPlayList.getAdditionalProperties().get("Error").toString();
+                                Toast.makeText(ToolbarSearchActivity.this, error, Toast.LENGTH_LONG).show();
+                            }
 
                             progressBar.setVisibility(View.GONE);
                         } catch (IOException e) {
@@ -105,7 +112,7 @@ public class ToolbarSearchActivity extends AppCompatActivity  implements SearchV
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(ToolbarSearchActivity.this, "Ops! Ocorreu um problema durante a busca", Toast.LENGTH_LONG).show();
+                        Toast.makeText(ToolbarSearchActivity.this, "Oops! There was a problem during this search", Toast.LENGTH_LONG).show();
                     }
                 }
         );
@@ -127,7 +134,11 @@ public class ToolbarSearchActivity extends AppCompatActivity  implements SearchV
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         ScreenPlay screenPlay = (ScreenPlay) parent.getAdapter().getItem(position);
 
-        Toast.makeText(ToolbarSearchActivity.this, screenPlay.getTitle(), Toast.LENGTH_LONG * 5).show();
+        Intent intent = new Intent(this, ScreenPlayInfoActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("screenPlay", screenPlay);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     @Override
@@ -142,8 +153,7 @@ public class ToolbarSearchActivity extends AppCompatActivity  implements SearchV
                     public void onClick(DialogInterface dialog, int which) {
                         //Add item as a favorite
 
-
-                        Toast.makeText(ToolbarSearchActivity.this, "\"" + screenPlay.getTitle() + "\" was added as a favorite", Toast.LENGTH_LONG * 2).show();
+                        Toast.makeText(ToolbarSearchActivity.this, "\"" + screenPlay.getTitle() + "\" was added as a favorite", Toast.LENGTH_LONG).show();
                     }
                 })
                 .setNegativeButton("No", null)

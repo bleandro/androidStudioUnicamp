@@ -24,7 +24,11 @@
         <activity
             android:name=".ToolbarSearchActivity"
             android:label="@string/title_activity_toolbar_search"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ScreenPlayInfoActivity"
+            android:label="@string/title_activity_screen_play_info"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

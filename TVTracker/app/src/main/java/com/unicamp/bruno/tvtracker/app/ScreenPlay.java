@@ -1,5 +1,8 @@
 package com.unicamp.bruno.tvtracker.app;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -19,7 +22,7 @@ import java.util.Map;
         "Poster"
 })
 
-public class ScreenPlay {
+public class ScreenPlay implements Parcelable {
 
     @JsonProperty("Title")
     private String title;
@@ -99,4 +102,39 @@ public class ScreenPlay {
         return "Title: " + this.getTitle() + "\n" +
                 "Release Year: " + this.getYear();
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.getTitle());
+        dest.writeString(this.getYear());
+        dest.writeString(this.getImdbID());
+        dest.writeString(this.getType());
+        dest.writeString(this.getPoster());
+    }
+
+    public static final Creator CREATOR = new Creator() {
+
+        @Override
+        public ScreenPlay createFromParcel(Parcel in) {
+            ScreenPlay parcelScreenPlay = new ScreenPlay();
+
+            parcelScreenPlay.setTitle(in.readString());
+            parcelScreenPlay.setYear(in.readString());
+            parcelScreenPlay.setImdbID(in.readString());
+            parcelScreenPlay.setType(in.readString());
+            parcelScreenPlay.setPoster(in.readString());
+
+            return parcelScreenPlay;
+        }
+
+        @Override
+        public ScreenPlay[] newArray(int size) {
+            return new ScreenPlay[size];
+        }
+    };
 }

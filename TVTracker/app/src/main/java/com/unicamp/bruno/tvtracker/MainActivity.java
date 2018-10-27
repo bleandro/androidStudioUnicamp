@@ -15,34 +15,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String url = RequestController.BASE_URL + RequestController.API_KEY + "&s=gotham";
-//
-//                // Request a string response from the provided URL.
-//                StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-//                        new Response.Listener<String>() {
-//                            @Override
-//                            public void onResponse(String response) {
-//                                // Display the first 500 characters of the response string.
-//                                mTextView.setText(response);
-//                            }
-//                        }, new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        mTextView.setText("That didn't work!");
-//                    }
-//                });
-//
-//                // Add the request to the RequestQueue.
-//                requestController.addToRequestQueue(stringRequest);
-//
-//                Toast.makeText(MainActivity.this, "Requisição disparada", Toast.LENGTH_SHORT);
-//            }
-//        });
     }
 
     @Override
