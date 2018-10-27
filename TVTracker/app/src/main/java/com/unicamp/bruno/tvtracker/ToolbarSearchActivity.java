@@ -27,6 +27,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.unicamp.bruno.tvtracker.Database.DAO.ScreenPlayDAO;
+import com.unicamp.bruno.tvtracker.Database.DAO.ScreenPlayDAOImpl;
 import com.unicamp.bruno.tvtracker.app.RequestController;
 import com.unicamp.bruno.tvtracker.app.ScreenPlay;
 import com.unicamp.bruno.tvtracker.app.ScreenPlayList;
@@ -147,11 +149,13 @@ public class ToolbarSearchActivity extends AppCompatActivity  implements SearchV
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Add \"" + screenPlay.getTitle() + "\" as a favorite?")
-                .setTitle("Alerta")
+                .setTitle("Alert")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //Add item as a favorite
+                        ScreenPlayDAO screenPlayDAO = new ScreenPlayDAOImpl(ToolbarSearchActivity.this);
+                        screenPlayDAO.saveScreenPlay(screenPlay);
 
                         Toast.makeText(ToolbarSearchActivity.this, "\"" + screenPlay.getTitle() + "\" was added as a favorite", Toast.LENGTH_LONG).show();
                     }
