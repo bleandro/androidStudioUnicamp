@@ -2,9 +2,8 @@
     <string name="app_name">TVTracker</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_search">screenPlay</string>
-    <string name="title_activity_toolbar_search">ToolbarSearchActivity</string>
-    <string name="title_activity_screen_play_info">ScreenPlayInfoActivity</string>
-    <string name="title_activity_scrolling">ScrollingActivity</string>
+    <string name="title_activity_toolbar_search">Search</string>
+    <string name="title_activity_screen_play_info">Informations</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

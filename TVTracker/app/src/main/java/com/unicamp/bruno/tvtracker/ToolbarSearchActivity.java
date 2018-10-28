@@ -148,7 +148,8 @@ public class ToolbarSearchActivity extends AppCompatActivity  implements SearchV
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         ScreenPlay screenPlay = (ScreenPlay) parent.getAdapter().getItem(position);
 
-        Intent intent = new Intent(this, ScreenPlayInfoActivity.class);
+        Intent intent = new Intent("informations");
+        //Intent intent = new Intent(this, ScreenPlayInfoActivity.class);
         Bundle bundle = new Bundle();
         bundle.putParcelable("screenPlay", screenPlay);
         intent.putExtras(bundle);

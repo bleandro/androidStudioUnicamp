@@ -21,14 +21,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ToolbarSearchActivity"
             android:label="@string/title_activity_toolbar_search"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".ScreenPlayInfoActivity"
             android:label="@string/title_activity_screen_play_info"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="informations"/>
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
