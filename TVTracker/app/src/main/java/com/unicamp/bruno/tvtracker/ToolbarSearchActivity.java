@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -69,10 +70,21 @@ public class ToolbarSearchActivity extends AppCompatActivity  implements SearchV
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         MenuItem mSearchmenuItem = menu.findItem(R.id.menu_toolbarsearch);
         SearchView searchView = (SearchView) mSearchmenuItem.getActionView();
-        searchView.setQueryHint("Title to ScreenPlay");
+        searchView.setQueryHint("Title to search");
         searchView.setOnQueryTextListener(this);
 
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

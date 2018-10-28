@@ -3,8 +3,12 @@ package com.unicamp.bruno.tvtracker;
 import android.graphics.Bitmap;
 import android.media.Image;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -40,6 +44,9 @@ public class ScreenPlayInfoActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         requestController = RequestController.getInstance();
         ScreenPlay screenPlay = (ScreenPlay) this.getIntent().getExtras().getParcelable("screenPlay");
 
@@ -56,6 +63,24 @@ public class ScreenPlayInfoActivity extends AppCompatActivity {
 
         this.setPosterImage(screenPlay);
         this.getscreenPlayInfo(screenPlay);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void setPosterImage(ScreenPlay screenPlay) {
