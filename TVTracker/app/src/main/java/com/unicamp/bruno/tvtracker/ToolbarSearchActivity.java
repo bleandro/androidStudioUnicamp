@@ -111,15 +111,15 @@ public class ToolbarSearchActivity extends AppCompatActivity  implements SearchV
                             if (screenPlayList.getResponse().equals("True")) {
                                 ArrayAdapter<ScreenPlay> arrayAdapter = new ArrayAdapter<ScreenPlay>(ToolbarSearchActivity.this, android.R.layout.simple_list_item_1, screenPlayList.getSearch());
                                 lvScreenplays.setAdapter(arrayAdapter);
-                            }
-                            else {
+                            } else {
                                 String error = screenPlayList.getAdditionalProperties().get("Error").toString();
                                 Toast.makeText(ToolbarSearchActivity.this, error, Toast.LENGTH_LONG).show();
                             }
-
-                            progressBar.setVisibility(View.GONE);
                         } catch (IOException e) {
                             e.printStackTrace();
+                        }
+                        finally {
+                            progressBar.setVisibility(View.GONE);
                         }
                     }
                 },
