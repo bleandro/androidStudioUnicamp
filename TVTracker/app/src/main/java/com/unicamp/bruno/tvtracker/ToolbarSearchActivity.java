@@ -126,6 +126,7 @@ public class ToolbarSearchActivity extends AppCompatActivity  implements SearchV
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        progressBar.setVisibility(View.GONE);
                         Toast.makeText(ToolbarSearchActivity.this, "Oops! There was a problem during this search", Toast.LENGTH_LONG).show();
                     }
                 }
