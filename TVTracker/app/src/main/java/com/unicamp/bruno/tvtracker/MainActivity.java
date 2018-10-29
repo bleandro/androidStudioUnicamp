@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.unicamp.bruno.tvtracker.Database.DAO.ScreenPlayDAO;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
     private ListView lvFavorites;
+    private TextView textFavorites;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         setSupportActionBar(toolbar);
 
         lvFavorites = (ListView) findViewById(R.id.lvFavorites);
+        textFavorites = (TextView) findViewById(R.id.textFavorites);
 
         lvFavorites.setOnItemClickListener(this);
         lvFavorites.setOnItemLongClickListener(this);
@@ -72,6 +75,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private void updateFavorites() {
         ScreenPlayDAO screenPlayDAO = new ScreenPlayDAOImpl(this);
         ArrayList<ScreenPlay> screenPlays = screenPlayDAO.getAll();
+
+        if (screenPlays.size() > 0)
+            textFavorites.setVisibility(View.VISIBLE);
+        else
+            textFavorites.setVisibility(View.INVISIBLE);
 
         ArrayAdapter<ScreenPlay> arrayAdapter = new ArrayAdapter<ScreenPlay>(MainActivity.this, android.R.layout.simple_list_item_1, screenPlays);
         lvFavorites.setAdapter(arrayAdapter);
